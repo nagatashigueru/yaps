@@ -22,7 +22,8 @@ module fermi
 
     integer, parameter, private :: UnitInput = 23
 
-    character(len=19), parameter, private :: Patron = "The fermi energy is"
+    character(len=19), parameter, private :: Patron = "the Fermi energy is"
+    character(len=), parameter, private :: FmtRead = "(24X,F11.4)"
 
     character(len=100), private :: Line
     
@@ -50,9 +51,16 @@ module fermi
                 read(unit=UnitInput,file=FileInput,status="old") Line
                 Find = index(Line,Patron)
                 if (Find .ne. 0 and Flag .ne. 1) then
-                    read(Line,fmt=) FermiEnergy
+                    read(Line,fmt=FmtRead) FermiEnergy
                     Flag = 1
-
+                end if
             end do
+
+            write(*,*) "-------------------------------------------------------"
+            write(*,*) "| [X] Energia de Fermi                                |"
+            write(*,*) "-------------------------------------------------------"
+            write(*,*) "Archivo leído :: ",FileInput
+            write(*,*) "Energia de Fermi :: ",FermiEnergy
+
         end subroutine fermi
 end module fermi
