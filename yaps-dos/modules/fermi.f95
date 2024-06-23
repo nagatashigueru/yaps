@@ -23,7 +23,7 @@ module fermi
     integer, parameter, private :: UnitInput = 23
 
     character(len=19), parameter, private :: Patron = "the Fermi energy is"
-    character(len=), parameter, private :: FmtRead = "(24X,F11.4)"
+    character(len=11), parameter, private :: FmtRead = "(24X,F11.4)"
 
     character(len=100), private :: Line
     
@@ -37,30 +37,37 @@ module fermi
 
     contains
 
-        subroutine fermi(FileInput, FermiEnergy)
+        subroutine GetFermi(FileInput, FermiEnergy)
            
-            implicit none
-
-            character(len=50), intent (in) :: FileInput
+            character(len=27), intent (in) :: FileInput
 
             real, intent (out) :: FermiEnergy
 
             Flag = 0
 
+            open(unit=UnitInput, file=FileInput, iostat=IOError, &
+                 status="old", action="read")
+            if (IOError .ne. 0) then
+                write(*,*) "Error al abrir :: ",FileInput
+                stop
+            end if
+
             do while(Flag .ne. 1)
-                read(unit=UnitInput,file=FileInput,status="old") Line
+                read(unit=UnitInput,fmt='(a100)') Line
                 Find = index(Line,Patron)
-                if (Find .ne. 0 and Flag .ne. 1) then
+                if (Find .ne. 0 .and. Flag .ne. 1) then
                     read(Line,fmt=FmtRead) FermiEnergy
                     Flag = 1
                 end if
             end do
 
-            write(*,*) "-------------------------------------------------------"
-            write(*,*) "| [X] Energia de Fermi                                |"
-            write(*,*) "-------------------------------------------------------"
-            write(*,*) "Archivo leído :: ",FileInput
-            write(*,*) "Energia de Fermi :: ",FermiEnergy
+            write(*,*) "*******************************************************"
+            write(*,*) "| Energia - Fermi                                     |"
+            write(*,*) "*******************************************************"
+            write(*,fmt='(A17,1X,A27)') "Archivo leído :: ",FileInput
+            write(*,fmt='(A20,F11.4)') "Energia de Fermi :: ",FermiEnergy
 
-        end subroutine fermi
+            close(unit=UnitInput)
+
+        end subroutine GetFermi
 end module fermi
