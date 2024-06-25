@@ -11,13 +11,14 @@ module fermi
     ! -------------------------------------------------------------------------|
     ! ~~~~~~~~~~~~~~~~~~~~~~~~ variables - parameters ~~~~~~~~~~~~~~~~~~~~~~~~~|
     ! -------------------------------------------------------------------------|
-    ! Line   :: Recibe cada una de las lineas leidas del archivo para luego    |
-    !           ser procesada                                                  |
-    ! Patron :: Patron de frase para identificar la linea que contiene la      |
-    !           energia de fermi                                               |
-    ! Flag   :: Flag que indica cuando se hallo la energia de fermi y detiene  |
-    !           el bucle                                                       |
-    ! Find   :: Recibe el valor de la funcion index para luego ser procesado   |
+    ! Line    :: Recibe cada una de las lineas leidas del archivo para luego   |
+    !            ser procesada                                                 |
+    ! Patron  :: Patron de frase para identificar la linea que contiene la     |
+    !            energia de fermi                                              |
+    ! Flag    :: Flag que indica cuando se hallo la energia de fermi y detiene |
+    !            el bucle                                                      |
+    ! Find    :: Recibe el valor de la funcion index para luego ser procesado  |
+    ! IOError :: Recibe el estado de abrir el archivo de entrada               |
     ! -------------------------------------------------------------------------|
 
     integer, parameter, private :: UnitInput = 23
