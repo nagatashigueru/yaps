@@ -7,7 +7,7 @@
 
 # ... VARIABLES ...
 
-OBJS = yaps-dos.o fermi.o
+OBJS = yaps-dos.o fermi.o files.o
 BINARY = yaps-dos.out
 FC = gfortran
 PATHMD = modules
@@ -21,6 +21,9 @@ main : $(OBJS)
 
 fermi.o : $(PATHMD)/fermi.f95
 	$(FC) -c $(PATHMD)/fermi.f95
+
+files.o : $(PATHMD)/files.f95
+	$(FC) -c $(PATHMD)/files.f95
 
 yaps-dos.o : yaps-dos.f95
 	$(FC) -c yaps-dos.f95

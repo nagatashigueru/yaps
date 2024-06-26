@@ -5,17 +5,23 @@
 ! Autor       :: Shigueru Nagata
 !*****************************************************************************
 
-program DOS
+PROGRAM DOS
 
-    use fermi
+    USE fermi
+    USE files
 
-    implicit none
+    IMPLICIT NONE
 
-    character(len=27) :: ScfFile    ! Archivo de entrada
-    real :: FermiEner               ! Energia de fermi
+    CHARACTER(LEN=27) :: ScfFile    ! SCF - FILE
+    CHARACTER(LEN=55) :: DosFile    ! DOS - FILE
+    REAL :: FermiEner               ! ENERGIA - FERMI
+    INTEGER :: NumLines          ! NUMERO - LINEAS
 
     ScfFile = "examplefiles/BiFeO3.scf.out"
+    DosFile = "examplefiles/BiFeO3.dos-proyec.pdos-atm-1(Fe1)-wfc-1(s)"
 
-    call GetFermi(ScfFile,FermiEner)
+    CALL GetFermi(ScfFile,FermiEner)
 
-end program DOS
+    NumLines = NumberLines(DosFile)
+
+END PROGRAM DOS
