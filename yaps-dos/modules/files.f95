@@ -18,7 +18,7 @@ MODULE files
 
         CHARACTER(LEN=100), PARAMETER :: ReadFmt = '(a100)'
 
-        CHARACTER(LEN=55) :: InputFile
+        CHARACTER(LEN=200) :: InputFile
         CHARACTER(LEN=100) :: Line
 
         INTEGER :: CountLines
@@ -29,7 +29,7 @@ MODULE files
         CountLines = 0
         ReadFlag = 0
 
-        OPEN(UNIT=UnitInput,FILE=InputFile,IOSTAT=OError,STATUS="OLD",ACTION="READ")
+        OPEN(UNIT=UnitInput,FILE=TRIM(InputFile),IOSTAT=OError,STATUS="OLD",ACTION="READ")
 
         IF (OError .NE. 0) THEN
             WRITE(*,*) "Error al abrir :: ",InputFile

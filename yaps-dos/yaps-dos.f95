@@ -13,7 +13,7 @@ PROGRAM DOS
     IMPLICIT NONE
 
     CHARACTER(LEN=27) :: ScfFile    ! SCF - FILE
-    CHARACTER(LEN=55) :: DosFile    ! DOS - FILE
+    CHARACTER(LEN=200) :: DosFile    ! DOS - FILE
     REAL :: FermiEner               ! ENERGIA - FERMI
     INTEGER :: NumLines          ! NUMERO - LINEAS
 
@@ -22,6 +22,7 @@ PROGRAM DOS
 
     CALL GetFermi(ScfFile,FermiEner)
 
-    NumLines = NumberLines(DosFile)
+    NumLines = NumberLines(TRIM(DosFile))
+    WRITE(*,*) "NUMERO DE LINEAS",NumLines
 
 END PROGRAM DOS
