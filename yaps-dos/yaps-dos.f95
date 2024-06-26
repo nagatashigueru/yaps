@@ -23,6 +23,5 @@ PROGRAM DOS
     CALL GetFermi(ScfFile,FermiEner)
 
     NumLines = NumberLines(TRIM(DosFile))
-    WRITE(*,*) "NUMERO DE LINEAS",NumLines
 
 END PROGRAM DOS

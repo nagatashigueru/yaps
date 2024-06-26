@@ -45,4 +45,15 @@ MODULE files
         END DO
 
     END FUNCTION NumberLines
+
+    SUBROUTINE ListFiles(PatronFile)
+
+        IMPLICIT NONE
+
+        CHARACTER(LEN=3), PARAMETER :: cmd1 = "ls "
+        CHARACTER(LEN=14), PARAMETER :: cmd2 = "> ListFile.txt"
+        CHARACTER(LEN=20) :: PatronFile
+
+
+    END SUBROUTINE ListFiles
 END MODULE files
