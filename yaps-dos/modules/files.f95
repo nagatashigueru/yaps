@@ -53,12 +53,32 @@ MODULE files
         CHARACTER(LEN=2), PARAMETER :: cmd1 = "ls"
         CHARACTER(LEN=11), PARAMETER :: cmd2 = "> FILES.txt"
         CHARACTER(LEN=200) :: Command
+        CHARACTER(LEN=100) :: Line
         INTEGER :: LongPatron
+        INTEGER :: CountFile
         CHARACTER(LEN=LongPatron) :: SearchPatron
 
         Command = cmd1//" "//SearchPatron//" "//cmd2
 
         CALL EXECUTE_COMMAND_LINE(TRIM(Command))
+
+        OPEN(UNIT=24,FILE="FILES.txt",STATUS="OLD",ACTION="READ")
+        
+        WRITE(*,*) "***************************"
+        WRITE(*,*) "*** LISTADO DE ARCHIVOS ***"
+        WRITE(*,*) "***************************"
+        WRITE(*,*) "PATRON USADO :: ",SearchPatron
+        WRITE(*,*) "ARCHIVOS HALLADOS ::"
+
+        CountFile = 0
+
+        DO
+            READ(UNIT=24,FMT='(A100)',END=100) Line
+            CountFile = CountFile + 1
+            WRITE(*,*) CountFile,TRIM(Line)
+        END DO
+
+        100 CLOSE(UNIT=24)
 
 
     END SUBROUTINE ListFiles
