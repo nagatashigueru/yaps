@@ -46,13 +46,19 @@ MODULE files
 
     END FUNCTION NumberLines
 
-    SUBROUTINE ListFiles(PatronFile)
+    SUBROUTINE ListFiles(SearchPatron,LongPatron)
 
         IMPLICIT NONE
 
-        CHARACTER(LEN=3), PARAMETER :: cmd1 = "ls "
-        CHARACTER(LEN=14), PARAMETER :: cmd2 = "> ListFile.txt"
-        CHARACTER(LEN=20) :: PatronFile
+        CHARACTER(LEN=2), PARAMETER :: cmd1 = "ls"
+        CHARACTER(LEN=11), PARAMETER :: cmd2 = "> FILES.txt"
+        CHARACTER(LEN=200) :: Command
+        INTEGER :: LongPatron
+        CHARACTER(LEN=LongPatron) :: SearchPatron
+
+        Command = cmd1//" "//SearchPatron//" "//cmd2
+
+        CALL EXECUTE_COMMAND_LINE(TRIM(Command))
 
 
     END SUBROUTINE ListFiles
