@@ -75,7 +75,7 @@ MODULE files
         DO
             READ(UNIT=24,FMT='(A100)',END=100) Line
             CountFile = CountFile + 1
-            WRITE(*,*) CountFile,TRIM(Line)
+            WRITE(*,FMT='(I3.3,2X,A)') CountFile,TRIM(Line)
         END DO
 
         100 CLOSE(UNIT=24)
