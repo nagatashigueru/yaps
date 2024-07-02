@@ -15,6 +15,7 @@ PROGRAM DOS
     CHARACTER(LEN=27) :: ScfFile    ! SCF - FILE
     CHARACTER(LEN=200) :: DosFile    ! DOS - FILE
     CHARACTER(LEN=200) :: SearchLine ! PATRON - BUSQUEDA
+    CHARACTER(LEN=200) :: LineFile
     REAL :: FermiEner               ! ENERGIA - FERMI
     INTEGER :: NumLines          ! NUMERO - LINEAS
 
@@ -25,6 +26,11 @@ PROGRAM DOS
     CALL GetFermi(ScfFile,FermiEner)
     CALL ListFiles(TRIM(SearchLine),LEN(TRIM(SearchLine)))
 
-    NumLines = NumberLines(TRIM(DosFile))
+    OPEN(UNIT=25,FILE="FILES.txt",STATUS="OLD",ACTION="READ")
+    READ(UNIT=25,FMT='(A200)') LineFile
+    CLOSE(UNIT=25)
+    
+    NumLines = NumberLines(TRIM(LineFile),LEN(TRIM(LineFile)))
+    WRITE(*,*) "Cantidad de valores de energía :: ",NumLines - 1
 
 END PROGRAM DOS

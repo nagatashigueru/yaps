@@ -10,26 +10,28 @@ MODULE files
 
     CONTAINS
 
-    FUNCTION NumberLines(InputFile) RESULT(CountLines)
+    FUNCTION NumberLines(InputFile,SizeName) RESULT(CountLines)
         
         IMPLICIT NONE
 
         INTEGER, PARAMETER :: UnitInput = 23
 
-        CHARACTER(LEN=100), PARAMETER :: ReadFmt = '(a100)'
-
-        CHARACTER(LEN=200) :: InputFile
-        CHARACTER(LEN=100) :: Line
-
+        INTEGER :: SizeName
         INTEGER :: CountLines
         INTEGER :: ReadFlag
         INTEGER :: OError
         INTEGER :: RError
 
+        CHARACTER(LEN=100), PARAMETER :: ReadFmt = '(a100)'
+
+        CHARACTER(LEN=SizeName) :: InputFile
+        CHARACTER(LEN=100) :: Line
+        
+
         CountLines = 0
         ReadFlag = 0
 
-        OPEN(UNIT=UnitInput,FILE=TRIM(InputFile),IOSTAT=OError,STATUS="OLD",ACTION="READ")
+        OPEN(UNIT=UnitInput,FILE=InputFile,IOSTAT=OError,STATUS="OLD",ACTION="READ")
 
         IF (OError .NE. 0) THEN
             WRITE(*,*) "Error al abrir :: ",InputFile
