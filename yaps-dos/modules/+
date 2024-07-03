@@ -1,0 +1,21 @@
+! ************************************************************************
+! NAME        :: data.f95
+! AUTOR       :: Shigueru Nagata
+! Descripcion :: Modulo para trabajar con los datos de densidad de estado.
+! ************************************************************************
+
+MODULE data
+
+    IMPLICIT NONE
+
+    CONTAINS
+
+        SUBROUTINE GetData(DataArray,DataRows,DataColumns)
+            
+            IMPLICIT NONE
+            
+            INTEGER :: DataRows
+            INTEGER :: DataColumns
+            REAL, DIMENSION(DataRows,DataColumns) :: DataArray
+        END SUBROUTINE GetData
+END MODULE data
