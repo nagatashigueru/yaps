@@ -13,14 +13,12 @@ PROGRAM DOS
     IMPLICIT NONE
 
     CHARACTER(LEN=27) :: ScfFile    ! SCF - FILE
-    CHARACTER(LEN=200) :: DosFile    ! DOS - FILE
     CHARACTER(LEN=200) :: SearchLine ! PATRON - BUSQUEDA
     CHARACTER(LEN=200) :: LineFile
     REAL :: FermiEner               ! ENERGIA - FERMI
     INTEGER :: NumLines          ! NUMERO - LINEAS
 
     ScfFile = "examplefiles/BiFeO3.scf.out"
-    DosFile = "examplefiles/BiFeO3.dos-proyec.pdos-atm-1(Fe1)-wfc-1(s)"
     SearchLine = "examplefiles/*\(Bi\)*"
 
     CALL GetFermi(ScfFile,FermiEner)
