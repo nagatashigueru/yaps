@@ -42,9 +42,12 @@ MODULE files
             READ(UNIT=UnitInput,FMT=ReadFmt,IOSTAT=RError) Line
             IF (RError .NE. 0) THEN
                 ReadFlag = 1
+            ELSE
+                CountLines = CountLines + 1
             END IF
-            CountLines = CountLines + 1
         END DO
+
+        CLOSE(UNIT=UnitInput)
 
     END FUNCTION NumberLines
 

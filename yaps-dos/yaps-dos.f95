@@ -9,17 +9,23 @@ PROGRAM DOS
 
     USE fermi
     USE files
+    USE data
 
     IMPLICIT NONE
 
     CHARACTER(LEN=27) :: ScfFile    ! SCF - FILE
     CHARACTER(LEN=200) :: SearchLine ! PATRON - BUSQUEDA
     CHARACTER(LEN=200) :: LineFile
+    CHARACTER(LEN=100) :: OutFile
     REAL :: FermiEner               ! ENERGIA - FERMI
     INTEGER :: NumLines          ! NUMERO - LINEAS
+    INTEGER :: Rows
+    INTEGER :: Columns
+    REAL, DIMENSION(:,:), ALLOCATABLE :: ValueArray
 
     ScfFile = "examplefiles/BiFeO3.scf.out"
     SearchLine = "examplefiles/*\(Bi\)*"
+    OutFile = "DOS.txt"
 
     CALL GetFermi(ScfFile,FermiEner)
     CALL ListFiles(TRIM(SearchLine),LEN(TRIM(SearchLine)))
@@ -29,6 +35,13 @@ PROGRAM DOS
     CLOSE(UNIT=25)
     
     NumLines = NumberLines(TRIM(LineFile),LEN(TRIM(LineFile)))
-    WRITE(*,*) "Cantidad de valores de energía :: ",NumLines - 1
+
+    Rows = NumLines - 2
+    Columns = 3
+
+    ALLOCATE(ValueArray(Rows,Columns))
+    ValueArray(:,:) = 0.0
+    CALL GetData(ValueArray,Rows,Columns)
+    CALL WriteData(ValueArray,Rows,Columns,TRIM(OutFile),LEN(TRIM(OutFile)))
 
 END PROGRAM DOS
