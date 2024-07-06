@@ -37,7 +37,6 @@ MODULE data
             CHARACTER(LEN=200) :: TrashLine
 
             NumberFiles = NumberLines(ListFiles,LEN(ListFiles))
-            write(*,*)"numero de archivos",NumberFiles
 
             OPEN(UNIT=UnitData,FILE=ListFiles,STATUS="OLD",ACTION="READ")
             ReadFlag = 0 
@@ -46,7 +45,6 @@ MODULE data
                 IF (RError .NE. 0) THEN
                     ReadFlag = 1
                 ELSE
-                    write(*,*)"archivo ",NameFile
                     OPEN(UNIT=UnitValue,FILE=TRIM(NameFile),STATUS="OLD",ACTION="READ")
                     READ(UNIT=UnitValue,FMT='(A200)')TrashLine
                     DO j=1,DataRows
@@ -76,6 +74,8 @@ MODULE data
             
             INTEGER :: LenOut
             CHARACTER(LEN=LenOut) :: OutputFile
+
+            CALL TestExistence(OutputFile,LEN(OutputFile))
 
             OPEN(UNIT=UnitOut,FILE=OutputFile,STATUS='NEW',ACTION='WRITE')
 

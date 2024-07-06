@@ -87,4 +87,30 @@ MODULE files
 
 
     END SUBROUTINE ListFiles
+
+    SUBROUTINE TestExistence(TEFile,LenTEFile)
+        
+        IMPLICIT NONE
+
+        INTEGER :: LenTEFile
+        INTEGER :: TEStat
+        INTEGER :: TEOption
+        CHARACTER(LEN=LenTEFile) :: TEFile
+
+        INTEGER, PARAMETER :: TEUnit=34
+
+        OPEN(UNIT=TEUnit,IOSTAT=TEStat,FILE=TEFile,STATUS='OLD')
+
+        IF (TEStat .EQ. 0) THEN
+            WRITE(*,*)"ARCHIVO :: ",TEFile
+            WRITE(*,*)"ESTADO :: EXISTE"
+            WRITE(*,*)"ACCION :: 1 (BORRAR)"
+            READ(*,*)TEOption
+
+            IF (TEOption .EQ. 1) THEN
+                CLOSE(UNIT=TEUnit,STATUS='DELETE')
+            END IF
+        END IF
+
+    END SUBROUTINE TestExistence
 END MODULE files
