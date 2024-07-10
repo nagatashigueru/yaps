@@ -10,6 +10,7 @@ PROGRAM DOS
     USE fermi
     USE files
     USE data
+    USE saludo
 
     IMPLICIT NONE
 
@@ -26,6 +27,8 @@ PROGRAM DOS
     ScfFile = "examplefiles/BiFeO3.scf.out"
     SearchLine = "examplefiles/*\(Bi\)*"
     OutFile = "DOS.txt"
+
+    CALL Greeting()
 
     CALL GetFermi(ScfFile,FermiEner)
     CALL ListFiles(TRIM(SearchLine),LEN(TRIM(SearchLine)))

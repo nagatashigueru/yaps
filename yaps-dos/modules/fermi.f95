@@ -62,11 +62,14 @@ module fermi
                 end if
             end do
 
-            write(*,*) "*******************************************************"
-            write(*,*) "| Energia - Fermi                                     |"
-            write(*,*) "*******************************************************"
-            write(*,fmt='(A17,1X,A27)') "Archivo leído :: ",FileInput
-            write(*,fmt='(A20,F11.4)') "Energia de Fermi :: ",FermiEnergy
+            WRITE(*,*) ""
+            write(*,FMT='(A24)') "************************"
+            write(*,FMT='(A24)') "*** ENERGIA DE FERMI ***"
+            write(*,FMT='(A24)') "************************"
+            WRITE(*,*) ""
+            write(*,fmt='(A19,1X,A27)') ADJUSTR("ARCHIVO LEIDO ::"),FileInput
+            write(*,fmt='(A19,1X,F7.4)') ADJUSTR("ENERGIA DE FERMI ::"),FermiEnergy
+            WRITE(*,*) ""
 
             close(unit=UnitInput)
 

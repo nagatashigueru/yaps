@@ -69,19 +69,28 @@ MODULE files
 
         OPEN(UNIT=24,FILE="FILES.txt",STATUS="OLD",ACTION="READ")
         
-        WRITE(*,*) "***************************"
-        WRITE(*,*) "*** LISTADO DE ARCHIVOS ***"
-        WRITE(*,*) "***************************"
-        WRITE(*,*) "PATRON USADO :: ",SearchPatron
-        WRITE(*,*) "ARCHIVOS HALLADOS ::"
+        WRITE(*,*) ""
+        WRITE(*,FMT='(A27)') "***************************"
+        WRITE(*,FMT='(A27)') "*** LISTADO DE ARCHIVOS ***"
+        WRITE(*,FMT='(A27)') "***************************"
+        WRITE(*,*) ""
+        WRITE(*,FMT='(A20,1X,A)') "PATRON USADO ::",SearchPatron
+        WRITE(*,FMT='(A20,1X)') "ARCHIVOS HALLADOS ::"
+        WRITE(*,*)""
+
+        WRITE(*,FMT='(A4,2X,A1,1X,A)') "N°","|","RUTA / NOMBRE"
+        WRITE(*,*) "---------------------"
 
         CountFile = 0
 
         DO
             READ(UNIT=24,FMT='(A100)',END=100) Line
             CountFile = CountFile + 1
-            WRITE(*,FMT='(I3.3,2X,A)') CountFile,TRIM(Line)
+            !WRITE(*,FMT='(I3.3,2X,A)') CountFile,TRIM(Line)
+            WRITE(*,FMT='(I4.3,1X,A1,1X,A)') CountFile,'|',TRIM(Line)
         END DO
+
+        WRITE(*,*) ""
 
         100 CLOSE(UNIT=24)
 
@@ -102,9 +111,10 @@ MODULE files
         OPEN(UNIT=TEUnit,IOSTAT=TEStat,FILE=TEFile,STATUS='OLD')
 
         IF (TEStat .EQ. 0) THEN
-            WRITE(*,*)"ARCHIVO :: ",TEFile
-            WRITE(*,*)"ESTADO :: EXISTE"
-            WRITE(*,*)"ACCION :: 1 (BORRAR)"
+            WRITE(*,*)""
+            WRITE(*,FMT='(A11,1X,A)') ADJUSTR("ARCHIVO ::"),TEFile
+            WRITE(*,FMT='(A11,1X,A6)') ADJUSTR("ESTADO ::"),"EXISTE"
+            WRITE(*,FMT='(A11,1X,A10)') ADJUSTR("ACCION ::"),"1 (BORRAR)"
             READ(*,*)TEOption
 
             IF (TEOption .EQ. 1) THEN
