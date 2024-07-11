@@ -51,7 +51,7 @@ MODULE data
                         READ(UNIT=UnitValue,FMT='(1X,F7.3,2X,E9.3E2,2X,E9.3E2)')Energy,Up,Down
                         DataArray(j,1) = Energy
                         DataArray(j,2) = DataArray(j,2) + Up
-                        DataArray(j,3) = DataArray(j,3) + Down
+                        DataArray(j,3) = DataArray(j,3) - Down
                     END DO
                     READ(UNIT=UnitValue,FMT='(A200)')TrashLine
                     CLOSE(UNIT=UnitValue)
@@ -80,7 +80,7 @@ MODULE data
             OPEN(UNIT=UnitOut,FILE=OutputFile,STATUS='NEW',ACTION='WRITE')
 
             DO row=1,MatrixRows
-                WRITE(UNIT=UnitOut,FMT='(F7.3,1X,E9.3E2,1X,E9.3E2)')MatrixData(row,1),MatrixData(row,2),MatrixData(row,3)
+                WRITE(UNIT=UnitOut,FMT='(F7.3,1X,E9.3E2,1X,E10.3E2)')MatrixData(row,1),MatrixData(row,2),MatrixData(row,3)
             END DO
 
             CLOSE(UNIT=UnitOut)
