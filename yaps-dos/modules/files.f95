@@ -123,4 +123,53 @@ MODULE files
         END IF
 
     END SUBROUTINE TestExistence
+
+    FUNCTION PatronAtomo(Atomo,LongAtomo) RESULT(Patron)
+        
+        IMPLICIT NONE
+ 
+        CHARACTER(LEN=3), PARAMETER :: RightPatron = '\)*'
+        CHARACTER(LEN=3), PARAMETER :: LeftPatron = '*\('
+ 
+        INTEGER :: LongAtomo
+        CHARACTER(LEN=LongAtomo) :: Atomo
+
+        CHARACTER(LEN=LongAtomo+6) :: Patron
+
+        Patron = LeftPatron//Atomo//RightPatron
+    END FUNCTION PatronAtomo
+
+    FUNCTION PatronOrbital(Orbital,LongOrbital) RESULT(Patron)
+    
+        IMPLICIT NONE
+
+        CHARACTER(LEN=3), PARAMETER :: RightPatron = "\)*"
+        CHARACTER(LEN=3), PARAMETER :: LeftPatron = "*\("
+
+        INTEGER :: LongOrbital
+        CHARACTER(LEN=LongOrbital) :: Orbital
+
+        CHARACTER(LEN=LongOrbital+6) :: Patron
+
+        Patron = LeftPatron//Orbital//RightPatron
+    END FUNCTION PatronOrbital
+
+    FUNCTION PatronAtomoOrbital(Atomo,LongAtomo,Orbital,LongOrbital) RESULT(Patron)
+    
+        IMPLICIT NONE
+
+        CHARACTER(LEN=3), PARAMETER :: RightPatron = "\)*"
+        CHARACTER(LEN=3), PARAMETER :: LeftPatron = "*\("
+        CHARACTER(LEN=2), PARAMETER :: CenterPatron = "\("
+
+        INTEGER :: LongAtomo
+        INTEGER :: LongOrbital
+        CHARACTER(LEN=LongAtomo) :: Atomo
+        CHARACTER(LEN=LongOrbital) :: Orbital
+        CHARACTER(LEN=LongOrbital+LongAtomo) :: LoLa
+        CHARACTER(LEN=LEN(LoLa)+11) :: Patron
+
+        Patron = LeftPatron//Atomo//RightPatron//CenterPatron//Orbital//RightPatron
+    END FUNCTION PatronAtomoOrbital
+
 END MODULE files

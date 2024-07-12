@@ -14,6 +14,9 @@ PROGRAM DOS
 
     IMPLICIT NONE
 
+    character(len=100) :: patroncito
+    character(len=20) :: ele
+
     CHARACTER(LEN=27) :: ScfFile    ! SCF - FILE
     CHARACTER(LEN=200) :: SearchLine ! PATRON - BUSQUEDA
     CHARACTER(LEN=200) :: LineFile
@@ -46,5 +49,9 @@ PROGRAM DOS
     ValueArray(:,:) = 0.0
     CALL GetData(ValueArray,Rows,Columns)
     CALL WriteData(ValueArray,Rows,Columns,TRIM(OutFile),LEN(TRIM(OutFile)))
+
+    ele = 'Babebibobu'
+    patroncito = PatronAtomoOrbital(trim(ele),len(trim(ele)),trim(ele),len(trim(ele))) 
+    write(*,*) patroncito
 
 END PROGRAM DOS
