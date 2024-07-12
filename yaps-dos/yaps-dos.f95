@@ -11,6 +11,7 @@ PROGRAM DOS
     USE files
     USE data
     USE saludo
+    USE init
 
     IMPLICIT NONE
 
@@ -33,7 +34,9 @@ PROGRAM DOS
 
     CALL Greeting()
 
-    CALL GetFermi(ScfFile,FermiEner)
+    CALL Interactive()
+
+    CALL GetFermi(TRIM(ScfFile),LEN(TRIM(ScfFile)),FermiEner)
     CALL ListFiles(TRIM(SearchLine),LEN(TRIM(SearchLine)))
 
     OPEN(UNIT=25,FILE="FILES.txt",STATUS="OLD",ACTION="READ")

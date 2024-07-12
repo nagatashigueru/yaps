@@ -38,9 +38,10 @@ module fermi
 
     contains
 
-        subroutine GetFermi(FileInput, FermiEnergy)
+        subroutine GetFermi(FileInput,LongFileInput,FermiEnergy)
            
-            character(len=27), intent (in) :: FileInput
+            INTEGER :: LongFileInput
+            character(len=LongFileInput), intent (in) :: FileInput
 
             real, intent (out) :: FermiEnergy
 
