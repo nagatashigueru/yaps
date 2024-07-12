@@ -1,6 +1,4 @@
 #!/bin/bash
-#echo "LIMPIANDO"
-#rm yaps-dos.out yaps-dos.o fermi.o fermi.mod files.o files.mod data.o data.mod saludo.o saludo.mod
 echo "*** CREANDO OBJETOS ***"
 gfortran -c yaps-dos.f95
 gfortran -c modules/fermi.f95

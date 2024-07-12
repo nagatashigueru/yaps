@@ -15,10 +15,6 @@ PROGRAM DOS
 
     IMPLICIT NONE
 
-    character(len=100) :: patroncito
-    character(len=20) :: ele
-
-    CHARACTER(LEN=27) :: ScfFile    ! SCF - FILE
     CHARACTER(LEN=200) :: SearchLine ! PATRON - BUSQUEDA
     CHARACTER(LEN=200) :: LineFile
     CHARACTER(LEN=100) :: OutFile
@@ -28,15 +24,20 @@ PROGRAM DOS
     INTEGER :: Columns
     REAL, DIMENSION(:,:), ALLOCATABLE :: ValueArray
 
-    ScfFile = "examplefiles/BiFeO3.scf.out"
-    SearchLine = "examplefiles/*\(Bi\)*"
-    OutFile = "DOS.txt"
-
     CALL Greeting()
-
     CALL Interactive()
 
-    CALL GetFermi(TRIM(ScfFile),LEN(TRIM(ScfFile)),FermiEner)
+    IF (PatronOption .EQ. 1) THEN
+        SearchLine = PatronAtomo(TRIM(AtomoName),LEN(TRIM(AtomoName)))
+    END IF
+    IF (PatronOption .EQ. 2) THEN
+        SearchLine = PatronOrbital(TRIM(OrbitalName),LEN(TRIM(OrbitalName)))
+    END IF
+    IF (PatronOption .EQ. 3) THEN
+        SearchLine = PatronAtomoOrbital(TRIM(AtomoName),LEN(TRIM(AtomoName)),TRIM(OrbitalName),LEN(TRIM(OrbitalName)))
+    END IF
+
+    CALL GetFermi(TRIM(ScfInputFile),LEN(TRIM(ScfInputFile)),FermiEner)
     CALL ListFiles(TRIM(SearchLine),LEN(TRIM(SearchLine)))
 
     OPEN(UNIT=25,FILE="FILES.txt",STATUS="OLD",ACTION="READ")
@@ -51,10 +52,6 @@ PROGRAM DOS
     ALLOCATE(ValueArray(Rows,Columns))
     ValueArray(:,:) = 0.0
     CALL GetData(ValueArray,Rows,Columns)
-    CALL WriteData(ValueArray,Rows,Columns,TRIM(OutFile),LEN(TRIM(OutFile)))
-
-    ele = 'Babebibobu'
-    patroncito = PatronAtomoOrbital(trim(ele),len(trim(ele)),trim(ele),len(trim(ele))) 
-    write(*,*) patroncito
+    CALL WriteData(ValueArray,Rows,Columns,TRIM(DosOutputFile),LEN(TRIM(DosOutputFile)))
 
 END PROGRAM DOS

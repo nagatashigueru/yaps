@@ -12,7 +12,7 @@ MODULE init
     CHARACTER(LEN=20) :: OrbitalName
 
     CHARACTER(LEN=15), DIMENSION(3), PARAMETER :: Patrones = [CHARACTER(LEN=15) :: 'ATOMO','ORBITAL','ATOMO Y ORBITAL']
-    INTEGER, PRIVATE :: PatronOption
+    INTEGER :: PatronOption
 
     
     CONTAINS
