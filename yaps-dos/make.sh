@@ -1,11 +1,11 @@
 #!/bin/bash
 echo "*** CREANDO OBJETOS ***"
-gfortran -c yaps-dos.f95
+gfortran -c modules/saludo.f95
 gfortran -c modules/fermi.f95
 gfortran -c modules/files.f95
-gfortran -c modules/data.f95
-gfortran -c modules/saludo.f95
 gfortran -c modules/init.f95
+gfortran -c modules/data.f95
+gfortran -c yaps-dos.f95
 echo "*** OBJETOS CREADOS ***"
 echo " "
 echo "*** GENERANDO EJECUTABLE ***"

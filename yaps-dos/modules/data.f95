@@ -7,6 +7,7 @@
 MODULE data
 
     USE files
+    USE init
 
     IMPLICIT NONE
 
@@ -86,5 +87,39 @@ MODULE data
             CLOSE(UNIT=UnitOut)
 
         END SUBROUTINE WriteData
+
+        SUBROUTINE WriteGnuplot()
+        
+            IMPLICIT NONE
+
+            CHARACTER(LEN=4), PARAMETER :: BaseName= "DOS-"
+            CHARACTER(LEN=8), PARAMETER :: BaseExtension = ".gnuplot"
+            CHARACTER(:), ALLOCATABLE :: GnuplotFile
             
+            INTEGER :: LongName
+            INTEGER,  PARAMETER :: UnitDos = 55
+
+            IF (PatronOption .EQ. 1) THEN
+                LongName = LEN(BaseName) + LEN(BaseExtension) + LEN(AtomoName)
+                ALLOCATE(CHARACTER(LEN=LongName) :: GnuplotFile)
+                GnuplotFile = BaseName//AtomoName//BaseExtension
+            END IF
+            IF (PatronOption .EQ. 2) THEN
+                LongName = LEN(BaseName) + LEN(BaseExtension) + LEN(OrbitalName)
+                ALLOCATE(CHARACTER(LEN=LongName) :: GnuplotFile)
+                GnuplotFile = BaseName//OrbitalName//BaseExtension
+            END IF
+            IF (PatronOption .EQ. 3) THEN
+                LongName = LEN(BaseName) + LEN(BaseExtension) + LEN(AtomoName) + LEN(OrbitalName)
+                ALLOCATE(CHARACTER(LEN=LongName) :: GnuplotFile)
+                GnuplotFile = BaseName//AtomoName//OrbitalName//BaseExtension
+            END IF
+
+            OPEN(UNIT=UnitDos,FILE=GnuplotFile,STATUS='NEW',ACTION='WRITE')
+
+            WRITE(UNIT=UnitDos,FMT='(A)') "set title"
+
+            CLOSE(UNIT=UnitDos)
+            
+        END SUBROUTINE WriteGnuplot   
 END MODULE data

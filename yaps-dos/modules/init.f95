@@ -82,6 +82,17 @@ MODULE init
             WRITE(*,*) "ARCHIVO DE SALIDA ::",DosOutputFile
             WRITE(*,*) "TIPO DE PATRON ::",Patrones(PatronOption)
 
+            IF (PatronOption .EQ. 1) THEN
+                WRITE(*,*) "ATOMO ::",AtomoName
+            END IF
+            IF (PatronOption .EQ. 2) THEN
+                WRITE(*,*) "ORBITAL ::",OrbitalName
+            END IF
+            IF (PatronOption .EQ. 3) THEN
+                WRITE(*,*) "ATOMO ::",AtomoName
+                WRITE(*,*) "ORBITAL ::",OrbitalName
+            END IF
+
 
         END SUBROUTINE Interactive
 END MODULE init
