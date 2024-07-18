@@ -68,7 +68,7 @@ module fermi
             write(*,FMT='(A24)') "*** ENERGIA DE FERMI ***"
             write(*,FMT='(A24)') "************************"
             WRITE(*,*) ""
-            write(*,fmt='(A19,1X,A27)') ADJUSTR("ARCHIVO LEIDO ::"),FileInput
+            write(*,fmt='(A19,1X,A)') ADJUSTR("ARCHIVO LEIDO ::"),FileInput
             write(*,fmt='(A19,1X,F7.4)') ADJUSTR("ENERGIA DE FERMI ::"),FermiEnergy
             WRITE(*,*) ""
 

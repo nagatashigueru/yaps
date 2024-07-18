@@ -54,4 +54,8 @@ PROGRAM DOS
     CALL GetData(ValueArray,Rows,Columns)
     CALL WriteData(ValueArray,Rows,Columns,TRIM(DosOutputFile),LEN(TRIM(DosOutputFile)))
 
+    IF (OptionGnuplot .EQ. 1) THEN
+        CALL WriteGnuplot(TRIM(AtomoName),LEN(TRIM(AtomoName)),TRIM(OrbitalName),LEN(TRIM(OrbitalName)))
+    END IF
+
 END PROGRAM DOS

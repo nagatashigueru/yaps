@@ -88,38 +88,65 @@ MODULE data
 
         END SUBROUTINE WriteData
 
-        SUBROUTINE WriteGnuplot()
+        SUBROUTINE WriteGnuplot(Atomo,LongAtomo,Orbital,LongOrbital)
         
             IMPLICIT NONE
 
+            INTEGER :: LongAtomo
+            INTEGER :: LongOrbital
+
+            CHARACTER(LEN=LongAtomo) :: Atomo
+            CHARACTER(LEN=LongOrbital) :: Orbital
+
             CHARACTER(LEN=4), PARAMETER :: BaseName= "DOS-"
             CHARACTER(LEN=8), PARAMETER :: BaseExtension = ".gnuplot"
+            CHARACTER(LEN=1), PARAMETER :: Separator = "-"
             CHARACTER(:), ALLOCATABLE :: GnuplotFile
             
             INTEGER :: LongName
             INTEGER,  PARAMETER :: UnitDos = 55
 
             IF (PatronOption .EQ. 1) THEN
-                LongName = LEN(BaseName) + LEN(BaseExtension) + LEN(AtomoName)
+                LongName = LEN(BaseName) + LEN(BaseExtension) + LEN(Atomo)
                 ALLOCATE(CHARACTER(LEN=LongName) :: GnuplotFile)
-                GnuplotFile = BaseName//AtomoName//BaseExtension
+                GnuplotFile = BaseName//Atomo//BaseExtension
             END IF
             IF (PatronOption .EQ. 2) THEN
-                LongName = LEN(BaseName) + LEN(BaseExtension) + LEN(OrbitalName)
+                LongName = LEN(BaseName) + LEN(BaseExtension) + LEN(Orbital)
                 ALLOCATE(CHARACTER(LEN=LongName) :: GnuplotFile)
-                GnuplotFile = BaseName//OrbitalName//BaseExtension
+                GnuplotFile = BaseName//Orbital//BaseExtension
             END IF
             IF (PatronOption .EQ. 3) THEN
-                LongName = LEN(BaseName) + LEN(BaseExtension) + LEN(AtomoName) + LEN(OrbitalName)
+                LongName = LEN(BaseName) + LEN(BaseExtension) + LEN(Separator) + LEN(Atomo) + LEN(Orbital)
                 ALLOCATE(CHARACTER(LEN=LongName) :: GnuplotFile)
-                GnuplotFile = BaseName//AtomoName//OrbitalName//BaseExtension
+                GnuplotFile = BaseName//Atomo//Separator//Orbital//BaseExtension
             END IF
+
+            CALL TestExistence(GnuplotFile,LEN(GnuplotFile))
 
             OPEN(UNIT=UnitDos,FILE=GnuplotFile,STATUS='NEW',ACTION='WRITE')
 
-            WRITE(UNIT=UnitDos,FMT='(A)') "set title"
+            IF (PatronOption .EQ. 1) THEN
+                WRITE(UNIT=UnitDos,FMT='(A)') "set title '"//BaseName//Atomo//"'"
+            END IF
+            IF (PatronOption .EQ. 2) THEN
+                WRITE(UNIT=UnitDos,FMT='(A)') "set title '"//BaseName//Orbital//"'"
+            END IF
+            IF (PatronOption .EQ. 3) THEN
+                WRITE(UNIT=UnitDos,FMT='(A)') "set title '"//BaseName//Atomo//Separator//Orbital//"'"
+            END IF
+
+            WRITE(UNIT=UnitDos,FMT='(A)') "set style line 6 lt 6 lw 2.0 lc rgb 'blue'"
+            WRITE(UNIT=UnitDos,FMT='(A)') "set xlabel 'Energía'"
+            WRITE(UNIT=UnitDos,FMT='(A)') "set ylabel 'Densidad de Estados'"
+            WRITE(UNIT=UnitDos,FMT='(A)') "plot '"//TRIM(DosOutputFile)//"' u 1:2 w lines ls 6"
+            
 
             CLOSE(UNIT=UnitDos)
+
+            WRITE(*,*) "SE CREO EL ARCHIVO :: ",GnuplotFile
+            WRITE(*,*) "PARA VISUALIZAR EL GRAFICO EJECUTE ::"
+            WRITE(*,*) "gnuplot -p ",GnuplotFile
             
         END SUBROUTINE WriteGnuplot   
 END MODULE data

@@ -6,6 +6,10 @@
 ! ******************************************************************************
 
 MODULE files
+
+    USE init
+    USE error
+
     IMPLICIT NONE
 
     CONTAINS
@@ -114,11 +118,16 @@ MODULE files
             WRITE(*,*)""
             WRITE(*,FMT='(A11,1X,A)') ADJUSTR("ARCHIVO ::"),TEFile
             WRITE(*,FMT='(A11,1X,A6)') ADJUSTR("ESTADO ::"),"EXISTE"
-            WRITE(*,FMT='(A11,1X,A10)') ADJUSTR("ACCION ::"),"1 (BORRAR)"
+            WRITE(*,FMT='(A11)') ADJUSTR("ACCION ::")
+            WRITE(*,FMT='(A11,1X,A15)') ADJUSTR("->"),"1 :: REEMPLAZAR"
+            WRITE(*,FMT='(A11,1X,A21)') ADJUSTR("->"),"2 :: DETENER PROGRAMA"
             READ(*,*)TEOption
 
             IF (TEOption .EQ. 1) THEN
                 CLOSE(UNIT=TEUnit,STATUS='DELETE')
+            END IF
+            IF (TEOption .EQ. 2) THEN
+                CALL FileDuplicate(TRIM(TEFile),LEN(TRIM(TEFile)))
             END IF
         END IF
 

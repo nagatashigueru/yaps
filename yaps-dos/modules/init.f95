@@ -13,6 +13,7 @@ MODULE init
 
     CHARACTER(LEN=15), DIMENSION(3), PARAMETER :: Patrones = [CHARACTER(LEN=15) :: 'ATOMO','ORBITAL','ATOMO Y ORBITAL']
     INTEGER :: PatronOption
+    INTEGER :: OptionGnuplot
 
     
     CONTAINS
@@ -72,6 +73,12 @@ MODULE init
                 READ(*,*) OrbitalName
             END IF
 
+            WRITE(*,*) "¿DESEA UN GRAFICO CON GNUPLOT?"
+            WRITE(*,*) "1 :: SI"
+            WRITE(*,*) "2 :: NO"
+            WRITE(*,*) "ESCRIBA EL NUMERO DE OPCION"
+            READ(*,*) OptionGnuplot
+
             WRITE(*,*) "---------------------"
             WRITE(*,*) "RESUMEN DE PARAMETROS"
             WRITE(*,*) "---------------------"
@@ -91,6 +98,13 @@ MODULE init
             IF (PatronOption .EQ. 3) THEN
                 WRITE(*,*) "ATOMO ::",AtomoName
                 WRITE(*,*) "ORBITAL ::",OrbitalName
+            END IF
+
+            IF (OptionGnuplot .EQ. 1) THEN
+                WRITE(*,*) "GRAFICO GNUPLOT :: SI"
+            END IF
+            IF (OptionGnuplot .EQ. 2) THEN
+                WRITE(*,*) "GRAFICO GNUPLOT :: NO"
             END IF
 
 
