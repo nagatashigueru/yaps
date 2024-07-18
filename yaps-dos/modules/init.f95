@@ -4,6 +4,8 @@
 
 MODULE init
 
+    USE files
+
     IMPLICIT NONE
 
     CHARACTER(LEN=200) :: ScfInputFile
@@ -57,6 +59,7 @@ MODULE init
             READ(*,*) PatronOption
 
             IF (PatronOption .EQ. 1) THEN
+                CALL ListAtomos(TRIM(ScfInputFile),LEN(TRIM(ScfInputFile)))
                 WRITE(*,*) "ESCRIBA EL NOMBRE DEL ATOMO"
                 READ(*,*) AtomoName
             END IF
@@ -67,6 +70,7 @@ MODULE init
             END IF
 
             IF (PatronOption .EQ. 3) THEN
+                CALL ListAtomos(TRIM(ScfInputFile),LEN(TRIM(ScfInputFile)))
                 WRITE(*,*) "ESCRIBA EL NOMBRE DEL ATOMO"
                 READ(*,*) AtomoName
                 WRITE(*,*) "ESCRIBA EL NOMBRE DEL ORBITAL"

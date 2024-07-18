@@ -7,7 +7,6 @@
 
 MODULE files
 
-    USE init
     USE error
 
     IMPLICIT NONE
@@ -180,5 +179,85 @@ MODULE files
 
         Patron = LeftPatron//Atomo//RightPatron//CenterPatron//Orbital//RightPatron
     END FUNCTION PatronAtomoOrbital
+
+    SUBROUTINE ListAtomos(LAScfFile,LALongScfFile)
+        
+        IMPLICIT NONE
+
+        INTEGER, PARAMETER :: LAUNIT=66
+        INTEGER, PARAMETER :: LAUNIT2=67
+        CHARACTER(LEN=22), PARAMETER :: LAPatronNumber="number of atomic types"
+        CHARACTER(LEN=4), PARAMETER :: LAPatronAtomos="mass"
+        CHARACTER(LEN=9), PARAMETER :: LAFmtNumber='(32X,I13)'
+        CHARACTER(LEN=8), PARAMETER :: LAFmtAtomos='(8X,A11)'
+
+        INTEGER :: LALongScfFile
+        INTEGER :: NumberAtomos
+        INTEGER :: LAFlag
+        INTEGER :: LAIOError
+        INTEGER :: LAFindNumber
+        INTEGER :: LAFindAtomos
+        INTEGER :: LAI
+
+        CHARACTER(LEN=LALongScfFile) :: LAScfFile
+        CHARACTER(LEN=200) :: LALine
+
+        CHARACTER(LEN=11), DIMENSION(:), ALLOCATABLE :: LAAtomosArray
+
+        OPEN(UNIT=LAUNIT,FILE=LAScfFile, IOSTAT=LAIOError,STATUS='OLD',ACTION='READ')
+
+        IF (LAIOError .NE. 0) THEN
+            WRITE(*,*) "ERROR AL ABRIR :: ",LAScfFile
+            STOP
+        END IF
+
+        LAFlag = 0
+
+        DO WHILE(LAFlag .NE. 1)
+            READ(UNIT=LAUNIT,FMT='(A200)') LALine
+            
+            LAFindNumber = INDEX(LALine,LAPatronNumber)
+            IF (LAFindNumber .NE. 0) THEN
+                READ(LALine,FMT=LAFmtNumber) NumberAtomos
+                LAFlag = 1
+            END IF
+        END DO
+        CLOSE(UNIT=LAUNIT)
+
+        ALLOCATE(LAAtomosArray(NumberAtomos))
+
+        LAFlag = 0
+        OPEN(UNIT=LAUNIT2,FILE=LAScfFile, IOSTAT=LAIOError,STATUS='OLD',ACTION='READ')
+        IF (LAIOError .NE. 0) THEN
+            WRITE(*,*) "ERROR AL ABRIR :: ",LAScfFile
+            STOP
+        END IF
+
+        DO WHILE(LAFlag .NE. 1)
+            READ(UNIT=LAUNIT2,FMT='(A200)') LALine
+
+            LAFindAtomos = INDEX(LALine,LAPatronAtomos)
+            IF (LAFindAtomos .NE. 0) THEN
+                DO LAI=1,NumberAtomos
+                    READ(UNIT=LAUNIT2,FMT=LAFmtAtomos) LAAtomosArray(LAI)
+                    !READ(UNIT=LAUNIT2,FMT='(A200)') LALine
+                    !WRITE(*,*) LALine
+                    write(*,*) "entreeeee"
+                END DO
+                WRITE(*,*) "ATOMOS DISPONIBLES ::"
+
+                DO LAI=1,NumberAtomos
+                    WRITE(*,FMT='(A11)') LAAtomosArray(LAI)
+                END DO
+
+                LAFlag = 1
+            END IF
+
+        END DO
+
+        CLOSE(UNIT=LAUNIT2)
+
+
+    END SUBROUTINE ListAtomos
 
 END MODULE files
