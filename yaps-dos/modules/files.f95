@@ -132,24 +132,24 @@ MODULE files
 
     END SUBROUTINE TestExistence
 
-    FUNCTION ScfExistence(SEScfFile,SELongScfFile) RESULT(SEExist)
+    FUNCTION FileExistence(FEScfFile,FELongScfFile) RESULT(FEExist)
         
         IMPLICIT NONE
 
-        INTEGER :: SELongScfFile
-        CHARACTER(LEN=SELongScfFile) :: SEScfFile
+        INTEGER :: FELongScfFile
+        CHARACTER(LEN=FELongScfFile) :: FEScfFile
 
-        LOGICAL :: SEExist
+        LOGICAL :: FEExist
 
-        INQUIRE(FILE=SEScfFile,EXIST=SEExist)
+        INQUIRE(FILE=FEScfFile,EXIST=FEExist)
 
-        IF (SEExist) THEN
-            WRITE(*,*) "SE COMPROBO QUE EXISTE :: ",SEScfFile
+        IF (FEExist) THEN
+            WRITE(*,*) "SI EXISTE EL ARCHIVO :: ",FEScfFile
         ELSE
-            WRITE(*,*) "NO EXISTE EL ARCHIVO :: ",SEScfFile
+            WRITE(*,*) "NO EXISTE EL ARCHIVO :: ",FEScfFile
         END IF
 
-    END FUNCTION ScfExistence
+    END FUNCTION FileExistence
 
     FUNCTION PatronAtomo(Atomo,LongAtomo) RESULT(Patron)
         

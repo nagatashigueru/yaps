@@ -5,6 +5,7 @@
 MODULE init
 
     USE files
+    USE error
 
     IMPLICIT NONE
 
@@ -16,10 +17,13 @@ MODULE init
     CHARACTER(LEN=15), DIMENSION(3), PARAMETER :: Patrones = [CHARACTER(LEN=15) :: 'ATOMO','ORBITAL','ATOMO Y ORBITAL']
     INTEGER :: PatronOption
     INTEGER :: OptionGnuplot
-
+    
+    INTEGER, PRIVATE :: IDosOutOption
     INTEGER, PRIVATE :: IScfFlag
+    INTEGER, PRIVATE :: IDosOutFlag
 
     LOGICAL, PRIVATE :: IScfExist
+    LOGICAL, PRIVATE :: IDosOutExist
 
 
     
@@ -50,6 +54,7 @@ MODULE init
             IMPLICIT NONE
             
             IScfFlag = 0
+            IDosOutFlag = 0
 
             WRITE(*,*) "-------------------------------"
             WRITE(*,*) "| INICIALIZACION DE PARAMETROS |"
@@ -57,14 +62,40 @@ MODULE init
             DO WHILE(IScfFlag .NE. 1)
                 WRITE(*,*) "Nombre del archivo SCF"
                 READ(*,*) ScfInputFile
-                IScfExist = ScfExistence(TRIM(ScfInputFile),LEN(TRIM(ScfInputFile)))
+                IScfExist = FileExistence(TRIM(ScfInputFile),LEN(TRIM(ScfInputFile)))
 
                 IF (IScfExist) THEN
                     IScfFlag = 1
                 END IF
             END DO
-            WRITE(*,*) "NOMBRE DEL ARCHIVO DE SALIDA"
-            READ(*,*) DosOutputFile
+            DO WHILE(IDosOutFlag .NE. 1)
+                WRITE(*,*) "NOMBRE DEL ARCHIVO DE SALIDA"
+                READ(*,*) DosOutputFile
+                IDosOutExist = FileExistence(TRIM(DosOutputFile),LEN(TRIM(DosOutputFile)))
+
+                IF (IDosOutExist) THEN
+                    WRITE(*,*) "OPCIONES ::"
+                    WRITE(*,*) "1 :: REEMPLAZAR"
+                    WRITE(*,*) "2 :: CAMBIAR NOMBRE"
+                    WRITE(*,*) "3 :: DETENER PROGRAMA"
+                    WRITE(*,*) "ESCRIBA EL NUMERO DE OPCION"
+                    READ(*,*) IDosOutOption
+                    
+                    IF (IDosOutOption .EQ. 1) THEN
+                        OPEN(UNIT=88,FILE=DosOutputFile,STATUS='OLD')
+                        CLOSE(UNIT=88,STATUS='DELETE')
+                        IDosOutFlag = 1
+                    END IF
+                    IF (IDosOutOption .EQ. 2) THEN
+                        CONTINUE
+                    END IF
+                    IF (IDosOutOption .EQ. 3) THEN
+                        CALL FileDuplicate(TRIM(DosOutputFile),LEN(TRIM(DosOutputFile)))            
+                    END IF
+                ELSE
+                    IDosOutFlag = 1
+                END IF
+            END DO
             WRITE(*,*) "TIPO DE PATRON DE BUSQUEDA"
             WRITE(*,*) "1 :: POR ATOMO"
             WRITE(*,*) "2 :: POR ORBITAL"
