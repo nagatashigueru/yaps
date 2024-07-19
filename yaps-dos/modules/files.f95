@@ -132,6 +132,25 @@ MODULE files
 
     END SUBROUTINE TestExistence
 
+    FUNCTION ScfExistence(SEScfFile,SELongScfFile) RESULT(SEExist)
+        
+        IMPLICIT NONE
+
+        INTEGER :: SELongScfFile
+        CHARACTER(LEN=SELongScfFile) :: SEScfFile
+
+        LOGICAL :: SEExist
+
+        INQUIRE(FILE=SEScfFile,EXIST=SEExist)
+
+        IF (SEExist) THEN
+            WRITE(*,*) "SE COMPROBO QUE EXISTE :: ",SEScfFile
+        ELSE
+            WRITE(*,*) "NO EXISTE EL ARCHIVO :: ",SEScfFile
+        END IF
+
+    END FUNCTION ScfExistence
+
     FUNCTION PatronAtomo(Atomo,LongAtomo) RESULT(Patron)
         
         IMPLICIT NONE
@@ -240,9 +259,6 @@ MODULE files
             IF (LAFindAtomos .NE. 0) THEN
                 DO LAI=1,NumberAtomos
                     READ(UNIT=LAUNIT2,FMT=LAFmtAtomos) LAAtomosArray(LAI)
-                    !READ(UNIT=LAUNIT2,FMT='(A200)') LALine
-                    !WRITE(*,*) LALine
-                    write(*,*) "entreeeee"
                 END DO
                 WRITE(*,*) "ATOMOS DISPONIBLES ::"
 

@@ -17,6 +17,11 @@ MODULE init
     INTEGER :: PatronOption
     INTEGER :: OptionGnuplot
 
+    INTEGER, PRIVATE :: IScfFlag
+
+    LOGICAL, PRIVATE :: IScfExist
+
+
     
     CONTAINS
 
@@ -43,12 +48,21 @@ MODULE init
         SUBROUTINE Interactive()
         
             IMPLICIT NONE
+            
+            IScfFlag = 0
 
             WRITE(*,*) "-------------------------------"
             WRITE(*,*) "| INICIALIZACION DE PARAMETROS |"
             WRITE(*,*) "-------------------------------"
-            WRITE(*,*) "Nombre del archivo SCF"
-            READ(*,*) ScfInputFile
+            DO WHILE(IScfFlag .NE. 1)
+                WRITE(*,*) "Nombre del archivo SCF"
+                READ(*,*) ScfInputFile
+                IScfExist = ScfExistence(TRIM(ScfInputFile),LEN(TRIM(ScfInputFile)))
+
+                IF (IScfExist) THEN
+                    IScfFlag = 1
+                END IF
+            END DO
             WRITE(*,*) "NOMBRE DEL ARCHIVO DE SALIDA"
             READ(*,*) DosOutputFile
             WRITE(*,*) "TIPO DE PATRON DE BUSQUEDA"
