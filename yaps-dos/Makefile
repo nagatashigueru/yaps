@@ -16,8 +16,22 @@ PATHMD = modules
 
 all = main
 
-main : $(OBJS)
+main : HeadObj $(OBJS) HeadExe
 	$(FC) -o $(BINARY) $(OBJS)
+
+HeadObj :
+	@printf -- '-%0.s' {1..50}
+	@echo ""
+	@echo "CREANDO OBJETOS"
+	@printf -- '-%0.s' {1..50}
+	@echo ""
+
+HeadExe :
+	@printf -- '-%0.s' {1..50}
+	@echo ""
+	@echo "CREANDO EJECUTABLE"
+	@printf -- '-%0.s' {1..50}
+	@echo ""
 
 saludo.o : $(PATHMD)/saludo.f95
 	$(FC) -c $(PATHMD)/saludo.f95
@@ -39,3 +53,6 @@ data.o : $(PATHMD)/data.f95
 
 yaps-dos.o : yaps-dos.f95
 	$(FC) -c yaps-dos.f95
+
+clean :
+	rm *.o *.mod *.out
