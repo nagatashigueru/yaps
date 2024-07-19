@@ -6,6 +6,7 @@ MODULE init
 
     USE files
     USE error
+    USE saludo
 
     IMPLICIT NONE
 
@@ -56,9 +57,9 @@ MODULE init
             IScfFlag = 0
             IDosOutFlag = 0
 
-            WRITE(*,*) "-------------------------------"
-            WRITE(*,*) "| INICIALIZACION DE PARAMETROS |"
-            WRITE(*,*) "-------------------------------"
+            CALL Separador()
+            WRITE(*,*) "INICIALIZACION DE PARAMETROS"
+            CALL Separador()
             DO WHILE(IScfFlag .NE. 1)
                 WRITE(*,*) "Nombre del archivo SCF"
                 READ(*,*) ScfInputFile
@@ -128,9 +129,9 @@ MODULE init
             WRITE(*,*) "ESCRIBA EL NUMERO DE OPCION"
             READ(*,*) OptionGnuplot
 
-            WRITE(*,*) "---------------------"
+            CALL Separador()
             WRITE(*,*) "RESUMEN DE PARAMETROS"
-            WRITE(*,*) "---------------------"
+            CALL Separador()
             WRITE(*,*) " "
             WRITE(*,*) "PARAMETRO | VALOR"
             WRITE(*,*) "-----------------"

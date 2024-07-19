@@ -6,6 +6,9 @@
 !                fermi, desde el archivo de salida (.out) de QuantumESPRESSO  |
 ! ****************************************************************************|
 module fermi
+
+    USE saludo
+
     implicit none
 
     ! -------------------------------------------------------------------------|
@@ -63,10 +66,9 @@ module fermi
                 end if
             end do
 
-            WRITE(*,*) ""
-            write(*,FMT='(A24)') "************************"
-            write(*,FMT='(A24)') "*** ENERGIA DE FERMI ***"
-            write(*,FMT='(A24)') "************************"
+            CALL Separador()
+            write(*,FMT='(A)') "ENERGIA DE FERMI"
+            CALL Separador() 
             WRITE(*,*) ""
             write(*,fmt='(A19,1X,A)') ADJUSTR("ARCHIVO LEIDO ::"),FileInput
             write(*,fmt='(A19,1X,F7.4)') ADJUSTR("ENERGIA DE FERMI ::"),FermiEnergy

@@ -12,4 +12,3 @@ echo " "
 echo "*** GENERANDO EJECUTABLE ***"
 gfortran -o yaps-dos.out yaps-dos.o fermi.o files.o data.o saludo.o init.o error.o
 echo "*** EJECUTABLE GENERADO ***"
-mv yaps-dos.out $HOME/bin/

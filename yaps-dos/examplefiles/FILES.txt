@@ -1,6 +1,0 @@
-BiFeO3.dos-proyec.pdos-atm-10(Bi)-wfc-1(s)
-BiFeO3.dos-proyec.pdos-atm-11(Bi)-wfc-1(s)
-BiFeO3.dos-proyec.pdos-atm-12(Bi)-wfc-1(s)
-BiFeO3.dos-proyec.pdos-atm-7(Bi)-wfc-1(s)
-BiFeO3.dos-proyec.pdos-atm-8(Bi)-wfc-1(s)
-BiFeO3.dos-proyec.pdos-atm-9(Bi)-wfc-1(s)

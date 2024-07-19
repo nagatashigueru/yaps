@@ -8,6 +8,7 @@
 MODULE files
 
     USE error
+    USE Saludo
 
     IMPLICIT NONE
 
@@ -72,30 +73,27 @@ MODULE files
 
         OPEN(UNIT=24,FILE="FILES.txt",STATUS="OLD",ACTION="READ")
         
-        WRITE(*,*) ""
-        WRITE(*,FMT='(A27)') "***************************"
-        WRITE(*,FMT='(A27)') "*** LISTADO DE ARCHIVOS ***"
-        WRITE(*,FMT='(A27)') "***************************"
+        CALL Separador()
+        WRITE(*,FMT='(A)') "LISTADO DE ARCHIVOS"
+        CALL Separador()
         WRITE(*,*) ""
         WRITE(*,FMT='(A20,1X,A)') "PATRON USADO ::",SearchPatron
         WRITE(*,FMT='(A20,1X)') "ARCHIVOS HALLADOS ::"
         WRITE(*,*)""
 
         WRITE(*,FMT='(A4,2X,A1,1X,A)') "N°","|","RUTA / NOMBRE"
-        WRITE(*,*) "---------------------"
+        WRITE(*,FMT='(A21)') REPEAT("-",21)
 
         CountFile = 0
 
         DO
             READ(UNIT=24,FMT='(A100)',END=100) Line
             CountFile = CountFile + 1
-            !WRITE(*,FMT='(I3.3,2X,A)') CountFile,TRIM(Line)
             WRITE(*,FMT='(I4.3,1X,A1,1X,A)') CountFile,'|',TRIM(Line)
         END DO
 
-        WRITE(*,*) ""
-
         100 CLOSE(UNIT=24)
+        CALL Separador()
 
 
     END SUBROUTINE ListFiles
